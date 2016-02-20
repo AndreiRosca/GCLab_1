@@ -1,16 +1,28 @@
 package md.utm.labs;
 
-import java.awt.Color;
 import java.awt.Graphics;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.simpleframework.xml.Element;
+import org.simpleframework.xml.Root;
+
+@Root
 public class Polygon implements Shape {
 
+	@Element
 	private Point center;
+
+	@Element
 	private int radius;
+
+	@Element
 	private int numberOfPoints;
+
+	@Element
 	private Color color = new Color(0, 0, 0);
+
+	@Element
 	private boolean hollow = true;
 
 	public Polygon(Point center, int radius, int numberOfPoints) {
@@ -18,6 +30,10 @@ public class Polygon implements Shape {
 		this.center = center;
 		this.radius = radius;
 		this.numberOfPoints = numberOfPoints;
+	}
+
+	public Polygon() {
+		super();
 	}
 
 	public Point getCenter() {
@@ -70,21 +86,21 @@ public class Polygon implements Shape {
 			int y = (int) (center.getY() + radius * Math.sin(angle * Math.PI / 180));
 			points.add(new Point(x, y));
 		}
-		g.setColor(color);
+		g.setColor(new java.awt.Color(color.getRed(), color.getGreen(), color.getBlue()));
 		int[] xPoints = getXPoints(points);
 		int[] yPoints = getYPoints(points);
 		g.drawPolygon(xPoints, yPoints, numberOfPoints);
 		if (!isHollow())
 			g.fillPolygon(xPoints, yPoints, numberOfPoints);
 	}
-	
+
 	private int[] getXPoints(List<Point> points) {
 		int[] xPoints = new int[points.size()];
 		for (int i = 0; i < xPoints.length; ++i)
 			xPoints[i] = points.get(i).getX();
 		return xPoints;
 	}
-	
+
 	private int[] getYPoints(List<Point> points) {
 		int[] yPoints = new int[points.size()];
 		for (int i = 0; i < yPoints.length; ++i)

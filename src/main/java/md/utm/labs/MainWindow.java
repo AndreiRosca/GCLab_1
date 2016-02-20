@@ -2,7 +2,6 @@ package md.utm.labs;
 
 import java.awt.Graphics;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -12,6 +11,7 @@ import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
@@ -24,17 +24,17 @@ public class MainWindow extends JFrame {
 		setSize(1000, 750);
 		setTitle("GC Lab. 1");
 		createMenu();
-		setVisible(true);
 		add(new CustomPanel());
+		setVisible(true);
 	}
-
-	public void createMenu() {
-		final JMenuBar menuBar = new JMenuBar();
-		JMenu fileMenu = new JMenu("File");
+	
+	public static void main(String[] args) throws FileNotFoundException, IOException, ClassNotFoundException {
+		JFrame frame = new MainWindow();
+	}
+	
+	private JMenuItem createOpenMenuItem(final JMenuBar menuBar) {
 		JMenuItem openMenuItem = new JMenuItem("Open");
-		fileMenu.add(openMenuItem);
-		openMenuItem.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent actionEvent) {
+		openMenuItem.addActionListener((ActionEvent actionEvent) -> {
 				JFileChooser chooser = new JFileChooser();
 				int choice = chooser.showOpenDialog(menuBar);
 				if (choice != JFileChooser.APPROVE_OPTION)
@@ -44,13 +44,16 @@ public class MainWindow extends JFrame {
 					drawing = Drawing.loadDrawing(chosenFile);
 					SwingUtilities.updateComponentTreeUI(MainWindow.this);
 				} catch (Exception e) {
+					JOptionPane.showMessageDialog(null, "Sorry, an error occured while reading the image", "Error", 0);
 					throw new RuntimeException(e);
 				}
-			}
 		});
+		return openMenuItem;
+	}
+	
+	private JMenuItem createSaveMenuItem(final JMenuBar menuBar) {
 		JMenuItem saveMenuItem = new JMenuItem("Save");
-		saveMenuItem.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent actionEvent) {
+		saveMenuItem.addActionListener((ActionEvent actionEvent) -> {
 				JFileChooser chooser = new JFileChooser();
 				int choice = chooser.showSaveDialog(menuBar);
 				if (choice != JFileChooser.APPROVE_OPTION)
@@ -58,29 +61,36 @@ public class MainWindow extends JFrame {
 				File chosenFile = chooser.getSelectedFile();
 				try {
 					drawing.saveDrawing(chosenFile);
-				} catch (FileNotFoundException e) {
-					throw new RuntimeException(e);
-				} catch (IOException e) {
+				} catch (Exception e) {
+					JOptionPane.showMessageDialog(null, "Sorry, an error occured while saving the image", "Error", 0);
 					throw new RuntimeException(e);
 				}
-			}
 		});
-		fileMenu.add(saveMenuItem);
+		return saveMenuItem;
+	}
+	
+	private JMenuItem createDrawMenuItem(final JMenuBar menuBar) {
 		JMenuItem drawMenuItem = new JMenuItem("Draw");
-		drawMenuItem.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
+		drawMenuItem.addActionListener((actionListener) -> {
 				MainWindow.this.createShapes();
 				SwingUtilities.updateComponentTreeUI(MainWindow.this);
-			}
 		});
-		fileMenu.add(drawMenuItem);
+		return drawMenuItem;
+	}
+	
+	private JMenuItem createExitMenuItem() {
 		JMenuItem exitMenuItem = new JMenuItem("Exit");
-		fileMenu.add(exitMenuItem);
-		exitMenuItem.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent actionEvent) {
-				System.exit(0);
-			}
-		});
+		exitMenuItem.addActionListener((actionListener) -> System.exit(0));
+		return exitMenuItem;
+	}
+	
+	private void createMenu() {
+		JMenuBar menuBar = new JMenuBar();
+		JMenu fileMenu = new JMenu("File");
+		fileMenu.add(createOpenMenuItem(menuBar));
+		fileMenu.add(createSaveMenuItem(menuBar));
+		fileMenu.add(createDrawMenuItem(menuBar));
+		fileMenu.add(createExitMenuItem());
 		menuBar.add(fileMenu);
 		setJMenuBar(menuBar);
 	}
@@ -90,22 +100,16 @@ public class MainWindow extends JFrame {
 		this.drawing = drawing;
 	}
 
-	public void createShapes() {
-		drawing.addShape(new Triangle(new Point(50, 150), new Point(150, 50), new Point(250, 150)));
-		drawing.addShape(new Circle(new Point(600, 25), 150));
-		drawing.addShape(new HalfCircle(new Point(50, 200), 200));
-		drawing.addShape(new Line(new Point(350, 230), new Point(550, 300)));
-		drawing.addShape(new Rectangle(new Point(600, 225), new Point(800, 350)));
+	private void createShapes() {
+		drawing.addShape(new Triangle(new Point(75, 150), new Point(175, 50), new Point(275, 150)));
+		drawing.addShape(new Circle(new Point(700, 25), 150));
+		drawing.addShape(new HalfCircle(new Point(75, 250), 200));
+		drawing.addShape(new Line(new Point(375, 280), new Point(575, 350)));
+		drawing.addShape(new Rectangle(new Point(680, 250), new Point(880, 350)));
 		drawing.addShape(new Cuboid(new Point(50, 500), new Point(250, 625)));
 		drawing.addShape(new Ellipse(new Point(350, 425), 250, 200));
 		drawing.addShape(new HalfEllipse(new Point(650, 425), 250, 200));
-		drawing.addShape(new Polygon(new Point(410, 120), 100, 16));
-	}
-	
-	public static void main(String[] args) throws FileNotFoundException, IOException, ClassNotFoundException {
-		//MainWindow frame = new MainWindow(Drawing.loadDrawing("image.ros"));
-		MainWindow frame = new MainWindow();
-		//frame.drawing.saveDrawing("image.ros");
+		drawing.addShape(new Polygon(new Point(465, 120), 100, 16));
 	}
 	
 	private class CustomPanel extends JPanel {
@@ -116,86 +120,6 @@ public class MainWindow extends JFrame {
 		@Override
 		public void paintComponent(Graphics graphics) {
 			drawing.draw(graphics);
-			/*
-			drawTriangle(g);
-			drawCircle(g);
-			drawHalfCircle(g);
-			drawLine(g);
-			drawRectangle(g);
-			drawParalelipiped(g);
-			g.setColor(new Color(100, 200, 200));
-			Graphics2D g2d = (Graphics2D) g.create();
-			Shape ellipse = new Ellipse2D.Double(450, 450, 300, 200);
-			g2d.draw(ellipse);
-			g2d.fill(ellipse);
-			*/
 		}
-
-		/*
-		public void drawParalelipiped(Graphics g) {
-			g.setColor(new Color(200, 200, 120));
-			g.drawLine(50, 500, 300, 500);
-			g.drawLine(50, 625, 300, 625);
-			g.drawLine(50, 500, 50, 625);
-			g.drawLine(300, 500, 300, 625);
-			
-			g.drawLine(100, 450, 350, 450);
-			g.drawLine(50, 500, 100, 450);
-			g.drawLine(300, 500, 350, 450);
-			g.drawLine(300, 625, 350, 575);
-			g.drawLine(350, 575, 350, 450);
-			Graphics2D g2d = (Graphics2D) g.create();
-			Stroke dashed = new BasicStroke(1, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL, 0,
-					new float[] {9}, 0);
-			g2d.setStroke(dashed);
-			g2d.drawLine(100, 450, 100, 575);
-			g2d.drawLine(100, 575, 350, 575);
-			g2d.drawLine(50, 625, 100, 575);
-		}
-		*/
-
-		/*
-		public void drawRectangle(Graphics g) {
-			g.setColor(new Color(0, 255, 255));
-			g.drawLine(600, 225, 800, 225);
-			g.drawLine(600, 350, 800, 350);
-			g.drawLine(600, 225, 600, 350);
-			g.drawLine(800, 225, 800, 350);
-			g.fillRect(600, 225, 200, 125);
-		}
-		*/
-
-		/*
-		public void drawLine(Graphics g) {
-			g.setColor(new Color(255, 0, 255));
-			g.drawLine(350, 250, 550, 300);
-		}
-		*/
-
-		/*
-		public void drawHalfCircle(Graphics g) {
-			g.setColor(new Color(255, 255, 0));
-			g.drawArc(50, 200, 200, 200, 0, 180);
-			g.fillArc(50, 200, 200, 200, 0, 180);
-		}
-		*/
-
-		/*
-		public void drawCircle(Graphics g) {
-			g.setColor(new Color(0, 0, 255));
-			g.drawArc(600,  25, 150, 150, 0, 360);
-			g.fillArc(600, 25, 150, 150, 0, 360);
-		}
-		*/
-
-		/*
-		public void drawTriangle(Graphics g) {
-			g.setColor(new Color(255, 0, 0));
-			g.fillPolygon(new int [] { 50, 250, 150 }, new int[] { 150, 150, 50 }, 3);
-			g.drawLine(50, 150, 250, 150);
-			g.drawLine(50, 150, 150, 50);
-			g.drawLine(250, 150, 150, 50);
-		}
-		*/
 	}
 }
