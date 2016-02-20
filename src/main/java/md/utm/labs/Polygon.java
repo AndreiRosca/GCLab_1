@@ -11,7 +11,7 @@ public class Polygon implements Shape {
 	private int radius;
 	private int numberOfPoints;
 	private Color color = new Color(0, 0, 0);
-	private boolean hollow;
+	private boolean hollow = true;
 
 	public Polygon(Point center, int radius, int numberOfPoints) {
 		super();
@@ -74,6 +74,8 @@ public class Polygon implements Shape {
 		int[] xPoints = getXPoints(points);
 		int[] yPoints = getYPoints(points);
 		g.drawPolygon(xPoints, yPoints, numberOfPoints);
+		if (!isHollow())
+			g.fillPolygon(xPoints, yPoints, numberOfPoints);
 	}
 	
 	private int[] getXPoints(List<Point> points) {
