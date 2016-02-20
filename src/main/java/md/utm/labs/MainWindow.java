@@ -94,11 +94,12 @@ public class MainWindow extends JFrame {
 		drawing.addShape(new Triangle(new Point(50, 150), new Point(150, 50), new Point(250, 150)));
 		drawing.addShape(new Circle(new Point(600, 25), 150));
 		drawing.addShape(new HalfCircle(new Point(50, 200), 200));
-		drawing.addShape(new Line(new Point(350, 200), new Point(550, 300)));
+		drawing.addShape(new Line(new Point(350, 230), new Point(550, 300)));
 		drawing.addShape(new Rectangle(new Point(600, 225), new Point(800, 350)));
 		drawing.addShape(new Cuboid(new Point(50, 500), new Point(250, 625)));
 		drawing.addShape(new Ellipse(new Point(350, 425), 250, 200));
 		drawing.addShape(new HalfEllipse(new Point(650, 425), 250, 200));
+		drawing.addShape(new Polygon(new Point(410, 120), 100, 16));
 	}
 	
 	public static void main(String[] args) throws FileNotFoundException, IOException, ClassNotFoundException {
