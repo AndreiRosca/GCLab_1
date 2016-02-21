@@ -23,7 +23,7 @@ public class Ellipse implements Shape {
 	private Color color = new Color(100, 200, 200);
 
 	@Element
-	private boolean hollow;
+	private boolean hollow = true;
 
 	public Ellipse(Point center, int majorRadius, int minorRadius) {
 		super();
@@ -81,7 +81,7 @@ public class Ellipse implements Shape {
 		Graphics2D g2d = (Graphics2D) graphics.create();
 		java.awt.Shape ellipse = new Ellipse2D.Double(center.getX(), center.getY(), majorRadius, minorRadius);
 		g2d.draw(ellipse);
-		if (isHollow())
+		if (!isHollow())
 			g2d.fill(ellipse);
 	}
 }
