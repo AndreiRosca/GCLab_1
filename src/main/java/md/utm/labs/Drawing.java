@@ -59,4 +59,8 @@ public class Drawing implements Serializable {
 		}
 		return drawing;
 	}
+
+	public void clear() {
+		shapes.clear();
+	}
 }

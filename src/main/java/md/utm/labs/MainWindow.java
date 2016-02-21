@@ -101,6 +101,7 @@ public class MainWindow extends JFrame {
 	}
 
 	private void createShapes() {
+		drawing.clear();
 		drawing.addShape(new Triangle(new Point(75, 150), new Point(175, 50), new Point(275, 150)));
 		drawing.addShape(new Circle(new Point(700, 25), 150));
 		drawing.addShape(new HalfCircle(new Point(75, 250), 200));
