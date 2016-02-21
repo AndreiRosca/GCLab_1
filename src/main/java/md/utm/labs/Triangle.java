@@ -11,7 +11,7 @@ import org.simpleframework.xml.Root;
 public class Triangle implements Shape {
 	
 	@Element
-	private Color color = new Color(0, 0, 0);
+	private Color color = new Color(110, 50, 75);
 	
 	@Element
 	private Point left;

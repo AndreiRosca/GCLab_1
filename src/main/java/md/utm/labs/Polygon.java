@@ -21,7 +21,7 @@ public class Polygon implements Shape {
 	private int numberOfPoints;
 
 	@Element
-	private Color color = new Color(0, 0, 0);
+	private Color color = new Color(100, 50, 100);
 
 	@Attribute
 	private boolean hollow = true;
