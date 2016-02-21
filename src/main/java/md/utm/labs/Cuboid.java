@@ -4,6 +4,7 @@ import java.awt.BasicStroke;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Stroke;
+import java.util.Arrays;
 
 import org.simpleframework.xml.Element;
 import org.simpleframework.xml.Root;
@@ -19,6 +20,9 @@ public class Cuboid implements Shape {
 
 	@Element
 	private Color color = new Color(200, 200, 120);
+	
+	@Element
+	private boolean hollow;
 
 	public Cuboid(Point leftTop, Point rightBottom) {
 		super();
@@ -54,8 +58,22 @@ public class Cuboid implements Shape {
 		return rightBottom;
 	}
 
+	public boolean isHollow() {
+		return hollow;
+	}
+
+	public void setHollow(boolean hollow) {
+		this.hollow = hollow;
+	}
+
 	public void draw(Graphics graphics) {
 		graphics.setColor(new java.awt.Color(color.getRed(), color.getGreen(), color.getBlue()));
+		if (!isHollow()) {
+			drawFaceSide(graphics);
+			drawUpperSide(graphics);
+			drawLeftSide(graphics);
+			graphics.setColor(new java.awt.Color(0, 0, 0));
+		}
 		graphics.drawLine(leftTop.getX(), leftTop.getY(), rightBottom.getX(), leftTop.getY());
 		graphics.drawLine(leftTop.getX(), rightBottom.getY(), rightBottom.getX(), rightBottom.getY());
 		graphics.drawLine(leftTop.getX(), leftTop.getY(), leftTop.getX(), rightBottom.getY());
@@ -72,5 +90,26 @@ public class Cuboid implements Shape {
 		g2d.drawLine(leftTop.getX() + 50, leftTop.getY() - 50, leftTop.getX() + 50, rightBottom.getY() - 50);
 		g2d.drawLine(leftTop.getX() + 50, rightBottom.getY() - 50, rightBottom.getX() + 50, rightBottom.getY() - 50);
 		g2d.drawLine(leftTop.getX(), rightBottom.getY(), leftTop.getX() + 50, rightBottom.getY() - 50);
+	}
+
+	public void drawLeftSide(Graphics graphics) {
+		int numberOfPoints = 4;
+		int[] xPoints = { rightBottom.getX(), rightBottom.getX() + 50, rightBottom.getX() + 50, rightBottom.getX()  };
+		int[] yPoints = { leftTop.getY(), leftTop.getY() - 50, rightBottom.getY() - 50, rightBottom.getY() };
+		graphics.fillPolygon(xPoints, yPoints, numberOfPoints);
+	}
+
+	public void drawUpperSide(Graphics graphics) {
+		int numberOfPoints = 4;
+		int[] xPoints = { leftTop.getX(), leftTop.getX() + 50, rightBottom.getX() + 50, rightBottom.getX()  };
+		int[] yPoints = { leftTop.getY(), leftTop.getY() - 50, leftTop.getY() - 50, leftTop.getY() };
+		graphics.fillPolygon(xPoints, yPoints, numberOfPoints);
+	}
+
+	public void drawFaceSide(Graphics graphics) {
+		int numberOfPoints = 4;
+		int[] xPoints = { leftTop.getX(), leftTop.getX(), rightBottom.getX(), rightBottom.getX() };
+		int[] yPoints = { leftTop.getY(), rightBottom.getY(), rightBottom.getY(), leftTop.getY() };
+		graphics.fillPolygon(xPoints, yPoints, numberOfPoints);
 	}
 }
