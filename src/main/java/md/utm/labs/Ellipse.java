@@ -10,6 +10,7 @@ import org.simpleframework.xml.Root;
 
 @Root
 public class Ellipse implements Shape {
+	private static final long serialVersionUID = 1L;
 
 	@Element
 	private Point center;

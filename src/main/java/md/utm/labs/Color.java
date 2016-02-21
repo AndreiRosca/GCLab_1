@@ -8,10 +8,10 @@ public class Color {
 
 	@Attribute
 	private int red;
-	
+
 	@Attribute
 	private int green;
-	
+
 	@Attribute
 	private int blue;
 

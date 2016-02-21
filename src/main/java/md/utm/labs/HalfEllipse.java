@@ -10,10 +10,11 @@ import org.simpleframework.xml.Root;
 
 @Root
 public class HalfEllipse implements Shape {
+	private static final long serialVersionUID = 1L;
 
 	@Element
 	private Color color = new Color(12, 45, 90);
-	
+
 	@Element
 	private Point center;
 

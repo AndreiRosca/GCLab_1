@@ -8,7 +8,9 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 public class MainWindow extends JFrame {
-
+	private static final long serialVersionUID = 1L;
+	
+	@SuppressWarnings("unused")
 	private MainWindowMenu mainMenu = new MainWindowMenu(this);
 	private Drawing drawing = new Drawing();
 
@@ -21,7 +23,7 @@ public class MainWindow extends JFrame {
 	}
 
 	public static void main(String[] args) throws FileNotFoundException, IOException, ClassNotFoundException {
-		JFrame frame = new MainWindow();
+		new MainWindow();
 	}
 
 	public MainWindow(Drawing drawing) {
@@ -45,12 +47,14 @@ public class MainWindow extends JFrame {
 	public void setDrawing(Drawing drawing) {
 		this.drawing = drawing;
 	}
-	
+
 	public Drawing getDrawing() {
 		return drawing;
 	}
 
 	private class CustomPanel extends JPanel {
+		private static final long serialVersionUID = 1L;
+
 		public CustomPanel() {
 			setSize(MainWindow.this.getSize());
 		}

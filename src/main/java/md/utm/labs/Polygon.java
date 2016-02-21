@@ -10,6 +10,7 @@ import org.simpleframework.xml.Root;
 
 @Root
 public class Polygon implements Shape {
+	private static final long serialVersionUID = 1L;
 
 	@Element
 	private Point center;
@@ -79,6 +80,16 @@ public class Polygon implements Shape {
 
 	@Override
 	public void draw(Graphics g) {
+		List<Point> points = generatePolygonPoints();
+		int[] xPoints = getXPoints(points);
+		int[] yPoints = getYPoints(points);
+		g.setColor(new java.awt.Color(color.getRed(), color.getGreen(), color.getBlue()));
+		g.drawPolygon(xPoints, yPoints, numberOfPoints);
+		if (!isHollow())
+			g.fillPolygon(xPoints, yPoints, numberOfPoints);
+	}
+
+	private List<Point> generatePolygonPoints() {
 		final double ANGLE_PER_POINT = 360.0 / numberOfPoints;
 		double angle = 0;
 		List<Point> points = new ArrayList<Point>(numberOfPoints);
@@ -87,12 +98,7 @@ public class Polygon implements Shape {
 			int y = (int) (center.getY() + radius * Math.sin(angle * Math.PI / 180));
 			points.add(new Point(x, y));
 		}
-		g.setColor(new java.awt.Color(color.getRed(), color.getGreen(), color.getBlue()));
-		int[] xPoints = getXPoints(points);
-		int[] yPoints = getYPoints(points);
-		g.drawPolygon(xPoints, yPoints, numberOfPoints);
-		if (!isHollow())
-			g.fillPolygon(xPoints, yPoints, numberOfPoints);
+		return points;
 	}
 
 	private int[] getXPoints(List<Point> points) {

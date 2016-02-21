@@ -7,6 +7,7 @@ import org.simpleframework.xml.Root;
 
 @Root
 public class Point implements Serializable {
+	private static final long serialVersionUID = 1L;
 
 	@Element
 	private int x;

@@ -1,6 +1,5 @@
 package md.utm.labs;
 
-
 import java.awt.Graphics;
 
 import org.simpleframework.xml.Attribute;
@@ -9,36 +8,37 @@ import org.simpleframework.xml.Root;
 
 @Root
 public class Triangle implements Shape {
-	
+	private static final long serialVersionUID = 1L;
+
 	@Element
 	private Color color = new Color(110, 50, 75);
-	
+
 	@Element
 	private Point left;
-	
+
 	@Element
 	private Point top;
-	
+
 	@Element
 	private Point right;
-	
+
 	@Attribute
 	private boolean hollow;
-	
+
 	public Triangle() {
 		super();
 	}
-	
+
 	public Triangle(Point left, Point top, Point right) {
 		this.left = left;
 		this.top = top;
 		this.right = right;
 	}
-	
+
 	public void setColor(Color color) {
 		this.color = color;
 	}
-	
+
 	public boolean isHollow() {
 		return hollow;
 	}
@@ -53,7 +53,7 @@ public class Triangle implements Shape {
 		g.drawLine(left.getX(), left.getY(), top.getX(), top.getY());
 		g.drawLine(right.getX(), right.getY(), top.getX(), top.getY());
 		if (!hollow)
-			g.fillPolygon(new int [] { left.getX(), top.getX(), right.getX() }, 
+			g.fillPolygon(new int[] { left.getX(), top.getX(), right.getX() },
 					new int[] { left.getY(), top.getY(), right.getY() }, 3);
 	}
 }

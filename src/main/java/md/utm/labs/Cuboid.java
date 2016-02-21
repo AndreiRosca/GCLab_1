@@ -4,7 +4,6 @@ import java.awt.BasicStroke;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Stroke;
-import java.util.Arrays;
 
 import org.simpleframework.xml.Attribute;
 import org.simpleframework.xml.Element;
@@ -12,6 +11,7 @@ import org.simpleframework.xml.Root;
 
 @Root
 public class Cuboid implements Shape {
+	private static final long serialVersionUID = 1L;
 
 	@Element
 	private Point leftTop;
@@ -103,7 +103,7 @@ public class Cuboid implements Shape {
 	}
 
 	private void drawColoredFaces(Graphics graphics) {
-		colorFaceSide(graphics);
+		colorFrontSide(graphics);
 		colorUpperSide(graphics);
 		colorLeftSide(graphics);
 	}
@@ -131,7 +131,7 @@ public class Cuboid implements Shape {
 		graphics.fillPolygon(xPoints, yPoints, numberOfPoints);
 	}
 
-	private void colorFaceSide(Graphics graphics) {
+	private void colorFrontSide(Graphics graphics) {
 		int numberOfPoints = 4;
 		int[] xPoints = { leftTop.getX(), leftTop.getX(), rightBottom.getX(), rightBottom.getX() };
 		int[] yPoints = { leftTop.getY(), rightBottom.getY(), rightBottom.getY(), leftTop.getY() };
