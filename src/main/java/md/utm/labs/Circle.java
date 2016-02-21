@@ -2,6 +2,7 @@ package md.utm.labs;
 
 import java.awt.Graphics;
 
+import org.simpleframework.xml.Attribute;
 import org.simpleframework.xml.Element;
 import org.simpleframework.xml.Root;
 
@@ -17,7 +18,7 @@ public class Circle implements Shape {
 	@Element
 	private Color color = new Color(255, 0, 0);
 
-	@Element
+	@Attribute
 	private boolean hollow;
 
 	public Circle(Point center, int radius) {

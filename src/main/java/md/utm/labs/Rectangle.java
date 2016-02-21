@@ -2,6 +2,7 @@ package md.utm.labs;
 
 import java.awt.Graphics;
 
+import org.simpleframework.xml.Attribute;
 import org.simpleframework.xml.Element;
 import org.simpleframework.xml.Root;
 
@@ -10,14 +11,14 @@ public class Rectangle implements Shape {
 
 	@Element
 	private Point leftTop;
-	
+
 	@Element
 	private Point rightBottom;
-	
+
 	@Element
 	private Color color = new Color(0, 0, 255);
-	
-	@Element
+
+	@Attribute
 	private boolean hollow;
 
 	public Rectangle(Point leftTop, Point rightBottom) {
@@ -29,8 +30,6 @@ public class Rectangle implements Shape {
 	public Rectangle() {
 		super();
 	}
-
-
 
 	public Color getColor() {
 		return color;
@@ -71,7 +70,7 @@ public class Rectangle implements Shape {
 		graphics.drawLine(leftTop.getX(), leftTop.getY(), leftTop.getX(), rightBottom.getY());
 		graphics.drawLine(rightBottom.getX(), leftTop.getY(), rightBottom.getX(), rightBottom.getY());
 		if (!isHollow())
-			graphics.fillRect(leftTop.getX(), leftTop.getY(), 
-					rightBottom.getX() - leftTop.getX(), rightBottom.getY() - leftTop.getY());
+			graphics.fillRect(leftTop.getX(), leftTop.getY(), rightBottom.getX() - leftTop.getX(),
+					rightBottom.getY() - leftTop.getY());
 	}
 }

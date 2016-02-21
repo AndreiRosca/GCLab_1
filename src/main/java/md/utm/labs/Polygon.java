@@ -4,6 +4,7 @@ import java.awt.Graphics;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.simpleframework.xml.Attribute;
 import org.simpleframework.xml.Element;
 import org.simpleframework.xml.Root;
 
@@ -22,7 +23,7 @@ public class Polygon implements Shape {
 	@Element
 	private Color color = new Color(0, 0, 0);
 
-	@Element
+	@Attribute
 	private boolean hollow = true;
 
 	public Polygon(Point center, int radius, int numberOfPoints) {

@@ -6,6 +6,7 @@ import java.awt.Graphics2D;
 import java.awt.Stroke;
 import java.util.Arrays;
 
+import org.simpleframework.xml.Attribute;
 import org.simpleframework.xml.Element;
 import org.simpleframework.xml.Root;
 
@@ -21,7 +22,7 @@ public class Cuboid implements Shape {
 	@Element
 	private Color color = new Color(200, 200, 120);
 	
-	@Element
+	@Attribute
 	private boolean hollow;
 
 	public Cuboid(Point leftTop, Point rightBottom) {

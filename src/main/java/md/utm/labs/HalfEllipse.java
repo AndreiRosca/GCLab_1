@@ -4,6 +4,7 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.geom.Arc2D;
 
+import org.simpleframework.xml.Attribute;
 import org.simpleframework.xml.Element;
 import org.simpleframework.xml.Root;
 
@@ -22,7 +23,7 @@ public class HalfEllipse implements Shape {
 	@Element
 	private int minorRadius;
 
-	@Element
+	@Attribute
 	private boolean hollow;
 
 	public HalfEllipse(Point center, int majorRadius, int minorRadius) {

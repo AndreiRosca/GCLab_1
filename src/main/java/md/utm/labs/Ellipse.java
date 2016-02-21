@@ -4,6 +4,7 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.geom.Ellipse2D;
 
+import org.simpleframework.xml.Attribute;
 import org.simpleframework.xml.Element;
 import org.simpleframework.xml.Root;
 
@@ -22,7 +23,7 @@ public class Ellipse implements Shape {
 	@Element
 	private Color color = new Color(100, 200, 200);
 
-	@Element
+	@Attribute
 	private boolean hollow = true;
 
 	public Ellipse(Point center, int majorRadius, int minorRadius) {
